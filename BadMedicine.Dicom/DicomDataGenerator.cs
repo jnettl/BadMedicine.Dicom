@@ -147,6 +147,8 @@ public class DicomDataGenerator : DataGenerator,IDisposable
 
     private bool csvInitialized;
 
+    public string ExaminationPrefix { get; set; }
+
     /// <summary>
     /// 
     /// </summary>
@@ -284,7 +286,7 @@ public class DicomDataGenerator : DataGenerator,IDisposable
         ds.AddOrUpdate(DicomTag.SOPClassUID , DicomUID.SecondaryCaptureImageStorage);
 
         //patient details
-        ds.AddOrUpdate(DicomTag.PatientID, p.CHI);
+        ds.AddOrUpdate(DicomTag.PatientID, ExaminationPrefix + p.CHI);
         ds.AddOrUpdate(DicomTag.PatientName, $"{p.Surname}^{p.Forename}^^");
         ds.AddOrUpdate(DicomTag.PatientBirthDate, p.DateOfBirth);
 
@@ -305,7 +307,7 @@ public class DicomDataGenerator : DataGenerator,IDisposable
         ds.AddOrUpdate(new DicomTime(DicomTag.SeriesTime, DateTime.Today + series.SeriesTime));
 
         ds.AddOrUpdate(DicomTag.Modality,series.Modality);
-        ds.AddOrUpdate(DicomTag.AccessionNumber, series.Study.AccessionNumber ?? "");
+        ds.AddOrUpdate(DicomTag.AccessionNumber, ExaminationPrefix + series.Study.AccessionNumber ?? "");
 
         if(series.Study.StudyDescription != null)
             ds.AddOrUpdate(DicomTag.StudyDescription,series.Study.StudyDescription);

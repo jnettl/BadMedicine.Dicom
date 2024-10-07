@@ -115,6 +115,14 @@ internal class Program
         //Generate the dicom files (of the modalities that the user requested)
         var modalities = string.IsNullOrWhiteSpace(opts.Modalities)? Array.Empty<string>() :opts.Modalities.Split(",");
 
+        //Determine examination prefix
+        if (!string.IsNullOrEmpty(opts.ExaminationPrefix))
+        {
+            opts.ExaminationPrefix = opts.ExaminationPrefix.EndsWith("-")
+                    ? opts.ExaminationPrefix
+                    : opts.ExaminationPrefix + "-";
+        }
+
         dir = opts.OutputDirectory?.Equals("/dev/null",StringComparison.InvariantCulture)!=false ? null : Directory.CreateDirectory(opts.OutputDirectory);
         return new DicomDataGenerator(r, opts.OutputDirectory, modalities)
         {
@@ -122,7 +130,8 @@ internal class Program
             Anonymise = opts.Anonymise,
             Layout = opts.Layout,
             MaximumImages = opts.MaximumImages,
-            Csv = opts.csv
+            Csv = opts.csv,
+            ExaminationPrefix = opts.ExaminationPrefix
         };
     }
 
