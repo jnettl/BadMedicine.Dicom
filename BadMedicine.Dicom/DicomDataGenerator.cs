@@ -344,7 +344,7 @@ public class DicomDataGenerator : DataGenerator,IDisposable
         ds.AddOrUpdate(DicomTag.ExposureTime, "0");
         ds.AddOrUpdate(DicomTag.Exposure, "0");
         ds.AddOrUpdate(DicomTag.XRayTubeCurrent, "0");
-        ds.AddOrUpdate(DicomTag.PhotometricInterpretation, "");
+        ds.AddOrUpdate(DicomTag.PhotometricInterpretation, "RGB");
         ds.AddOrUpdate(DicomTag.AcquisitionNumber, "0");
         ds.AddOrUpdate(DicomTag.AcquisitionDate, series.SeriesDate);
         ds.AddOrUpdate(new DicomTime(DicomTag.AcquisitionTime, DateTime.Today + series.SeriesTime));
